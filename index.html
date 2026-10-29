@@ -29,5 +29,5 @@ const dec=(id,st)=>api('decide',{id,status:st,car:g('c'+id),driver:g('dr'+id),no
 const asg=()=>{const u=[...document.querySelectorAll('.am:checked')].map(x=>x.value);if(!u.length)return alert('Select employees');api('assign',{car:AS.car,days:SEL,uids:u,time:g('tm')}).then(o=>{if(o){AS={s:1};SEL=[];render()}})};
 const usave=()=>{const u={};['id','name','designation','department','phone','email','pin','role'].forEach(k=>u[k]=g('u_'+k).trim());api('userSave',{u,edit:EF.edit?1:0}).then(o=>{if(o){EF=null;render()}})},udel=id=>confirm('Delete this employee?')&&api('userDel',{id}),csave=()=>api('carSave',{old:CF.id||'',c:{num:g('c_num'),model:g('c_model'),driver:g('c_driver'),phone:g('c_phone'),owner:g('c_owner'),status:g('c_status')}}).then(o=>{if(o){CF=null;render()}}),cdel=id=>confirm('Delete this car?')&&api('carDel',{id});
 setInterval(()=>S&&tab=='Alerts'&&api('get'),30000);if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
-auth?go().then(()=>S||login()):login();
+auth?api('get').then(o=>o||login()):login();
 </script></body></html>
